@@ -1,0 +1,4 @@
+https://google.com
+google.com
+http://google.com
+://google.com
