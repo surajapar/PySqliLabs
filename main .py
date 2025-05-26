@@ -1,5 +1,5 @@
 import os
-from logo import print_logo
+from modules.logo import print_logo
 print_logo()
 
 
@@ -29,22 +29,22 @@ while True:
         print(f"You have selected option {choice}.")
         print(f"Testing {url} for SQL injection vulnerabilities...")
     if choice == "1":
-        from error_based import error_based_sql_injection
+        from modules.error_based import error_based_sql_injection
         error_based_sql_injection(url)
     elif choice == "2":
-        from union_based import union_based_sql_injection
+        from modules.union_based import union_based_sql_injection
         union_based_sql_injection(url)
     elif choice == "3":
-        from authentication_bypass import authentication_bypass
+        from modules.authentication_bypass import authentication_bypass
         authentication_bypass(url)
     elif choice == "4":
-        from boolean_based import boolean_based_sql_injection
+        from modules.boolean_based import boolean_based_sql_injection
         boolean_based_sql_injection(url)
     elif choice == "5":
-        from time_based import time_based_sql_injection
+        from modules.time_based import time_based_sql_injection
         time_based_sql_injection(url)
     elif choice == "6":
-        from multiple_urls import multiple_urls_sql_injection
+        from modules.multiple_urls import multiple_urls_sql_injection
         print("Enter File path for Multiple URLs txt file:")
         file_path = input("File path: ")
         if not os.path.isfile(file_path):
