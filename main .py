@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urlparse
 from modules.logo import print_logo
 from modules.error_based import error_based_sql_injection
 from modules.union_based import union_based_sql_injection
@@ -6,53 +7,59 @@ from modules.authentication_bypass import authentication_bypass
 from modules.boolean_based import boolean_based_sql_injection
 from modules.time_based import time_based_sql_injection
 from modules.multiple_urls import multiple_urls_sql_injection
+
+def is_valid_url(url):
+    try:
+        parsed = urlparse(url)
+        return parsed.scheme in ("http", "https") and bool(parsed.netloc)
+    except Exception:
+        return False
+
 print_logo()
 
-
-
-
-
 while True:
-    print("\nTo Ckack Error-Based SQL Injection : 1 ")
-    print("To Ckack Union-Based SQL Injection : 2")
-    print("Authentication Bypass : 3")
-    print("To Ckack Boolean Based : 4 ")
-    print("To Ckack Time-Based : 5")
-    print("To Ckack multiple url : 6")
-    print("End: 7")
+    print("\nMenu:")
+    print("1. Check Error-Based SQL Injection")
+    print("2. Check Union-Based SQL Injection")
+    print("3. Authentication Bypass")
+    print("4. Check Boolean-Based SQL Injection")
+    print("5. Check Time-Based SQL Injection")
+    print("6. Check Multiple URLs from File")
+    print("7. Exit")
 
-    choice = input("Enter Your Choice:")
-    if choice not in ["1", "2", "3", "4", "5", "6", "7"]:
+    choice = input("Enter your choice: ").strip()
+
+    if choice not in [str(i) for i in range(1, 8)]:
         print("Invalid choice. Please try again.\n")
         continue
 
-    url = None
+    if choice == "7":
+        print("Exiting the program.")
+        break
+
     if choice in ["1", "2", "3", "4", "5"]:
-        url = input("Enter the URL to test for SQL injection: ")
-        if not url.startswith("http://") and not url.startswith("https://"):
-            print("Please enter a valid URL starting with http:// or https://")
+        url = input("Enter the URL to test for SQL injection: ").strip()
+        if not is_valid_url(url):
+            print("Invalid URL. Please enter a valid URL starting with http:// or https://")
             continue
+
         print(f"You have selected option {choice}.")
-        print(f"Testing {url} for SQL injection vulnerabilities...")
-    if choice == "1":
-        error_based_sql_injection(url)
-    elif choice == "2":
-        union_based_sql_injection(url)
-    elif choice == "3":
-        authentication_bypass(url)
-    elif choice == "4":
-        boolean_based_sql_injection(url)
-    elif choice == "5":
-        time_based_sql_injection(url)
+        print(f"Testing {url} for SQL injection vulnerabilities...\n")
+
+        if choice == "1":
+            error_based_sql_injection(url)
+        elif choice == "2":
+            union_based_sql_injection(url)
+        elif choice == "3":
+            authentication_bypass(url)
+        elif choice == "4":
+            boolean_based_sql_injection(url)
+        elif choice == "5":
+            time_based_sql_injection(url)
+
     elif choice == "6":
-        print("Enter File path for Multiple URLs txt file:")
-        file_path = input("File path: ")
+        file_path = input("Enter file path for multiple URLs (txt file): ").strip()
         if not os.path.isfile(file_path):
             print("File does not exist. Please check the path.")
             continue
-        else:
-            multiple_urls_sql_injection(file_path)
-    elif choice == "7":
-        print("You have selected to exit the program.")
-        print("Exiting the program.")
-        break
+        multiple_urls_sql_injection(file_path)
