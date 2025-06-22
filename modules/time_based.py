@@ -7,7 +7,7 @@ def time_based_sql_injection(url):
             start_time = time.time()
             response = req.get(url + payload)
             end_time = time.time()
-            if end_time - start_time > 2:  # Adjust the threshold as needed
+            if end_time - start_time > 2:  
                 return True
             else:
                 return False

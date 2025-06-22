@@ -3,7 +3,6 @@ from urllib.parse import urlparse
 
 def error_based(url, payload):
     try:
-        # Handle appending payload cleanly
         separator = '&' if '?' in url else '?'
         full_url = f"{url}{separator}{payload}"
         
