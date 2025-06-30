@@ -1,6 +1,5 @@
 # PySqliLabs
-
-A collection of labs and exercises to practice SQL Injection vulnerabilities using Python.
+A  automate SQL Injection vulnerability testing using Python. This toolkit provides hands-on scenarios, automated testing scripts, and educational resources to help users understand, detect, and mitigate SQL Injection flaws in web applications.
 
 ## Project Status
 
@@ -9,7 +8,6 @@ Currently setting up the project structure and initial labs. More content and do
 
 ## Planned Features
 
-- Interactive SQL Injection labs
 - Step-by-step walkthroughs
 - Security best practices
 - Example payloads and explanations
@@ -17,7 +15,7 @@ Currently setting up the project structure and initial labs. More content and do
 - Support for multiple database types (e.g., MySQL, PostgreSQL, SQLite)
 - Regular updates with new challenges
 
-## Tested On
+## Testing On
 
 These labs and scripts are inspired by and tested on [PortSwigger Web Security Academy](https://portswigger.net/web-security) labs, ensuring real-world relevance and practical experience with SQL injection vulnerabilities.
 
@@ -27,5 +25,5 @@ Contributions are welcome! Please open issues or submit pull requests to help im
 
 ## License
 
-This project is licensed under the MIT License.
+Soon
 
