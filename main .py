@@ -7,6 +7,7 @@ from modules.authentication_bypass import authentication_bypass
 from modules.boolean_based import boolean_based_sql_injection
 from modules.time_based import time_based_sql_injection
 from modules.multiple_urls import multiple_urls_sql_injection
+from modules.crawl import crawl,testable_urls
 
 def is_valid_url(url):
     try:
@@ -47,15 +48,31 @@ while True:
         print(f"Testing {url} for SQL injection vulnerabilities...\n")
 
         if choice == "1":
-            error_based_sql_injection(url)
+            testable_urls.clear()
+            crawl(url)
+            for u in testable_urls:
+                error_based_sql_injection(u)
+            
         elif choice == "2":
-            union_based_sql_injection(url)
+             testable_urls.clear()
+             crawl(url)
+             for u in testable_urls:
+                union_based_sql_injection(u)
         elif choice == "3":
-            authentication_bypass(url)
+            testable_urls.clear()
+            crawl(url)
+            for u in testable_urls:
+                authentication_bypass(u)
         elif choice == "4":
-            boolean_based_sql_injection(url)
+            testable_urls.clear()
+            crawl(url)
+            for u in testable_urls:
+                boolean_based_sql_injection(u)
         elif choice == "5":
-            time_based_sql_injection(url)
+            testable_urls.clear()
+            crawl(url)
+            for u in testable_urls:
+                time_based_sql_injection(u1)
 
     elif choice == "6":
         file_path = input("Enter file path for multiple URLs (txt file): ").strip()

