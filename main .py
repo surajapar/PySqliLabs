@@ -72,7 +72,7 @@ while True:
             testable_urls.clear()
             crawl(url)
             for u in testable_urls:
-                time_based_sql_injection(u1)
+                time_based_sql_injection(u)
 
     elif choice == "6":
         file_path = input("Enter file path for multiple URLs (txt file): ").strip()
